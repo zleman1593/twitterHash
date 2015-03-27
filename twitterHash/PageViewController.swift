@@ -1,11 +1,9 @@
 
 
 //
-//  ViewController.swift
+//  PageViewController.swift
 //  UIPageViewController
 //
-//  Created by Shrikar Archak on 1/15/15.
-//  Copyright (c) 2015 Shrikar Archak. All rights reserved.
 //
 
 import UIKit
@@ -48,8 +46,8 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     }
     
     
-
-
+    
+    
     var count = 0
     
     var pageViewController : UIPageViewController!
@@ -65,6 +63,8 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     }
     
     func reset() {
+        //Placeholder view sizing until I have time to make it look nice
+        
         /* Getting the page View controller */
         pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as UIPageViewController
         self.pageViewController.dataSource = self
@@ -84,7 +84,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         self.pageViewController.setViewControllers([pageContentViewController!], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
     }
     
-  
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -113,9 +113,6 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     }
     
     func viewControllerAtIndex(index : Int) -> UIViewController? {
-        /*if((self.pageTitles.count == 0) || (index >= self.pageTitles.count)) {
-            return nil
-        }*/
         let pageContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageContentViewController") as PageContentViewController
         
         pageContentViewController.titleText = self.images[index].tweet.text

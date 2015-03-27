@@ -9,15 +9,36 @@
 import UIKit
 
 class TweetTableViewController: UITableViewController, UITextFieldDelegate {
+
+    var lastSuccessfulRequest: TwitterRequest?
     @IBAction func unwindToRoot(sender: UIStoryboardSegue) { }
+    
+    
+    //Struct to store constants
+    private struct Storyboard {
+        static let CellReuseIdentifier = "Tweet"
+        static let DetailsIdentifier = "showTweetDetail"
+        static let TweetImagesSegue = "showTweetImages"
+    }
+    
     var tweets:[[Tweet]] = [[Tweet]]() {
         didSet {
+            //Set the tweet data structure in the app delegate so that otherviews can
             let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
             appDelegate.tweets = tweets
         }
     }
     
-    var lastSuccessfulRequest: TwitterRequest?
+  
+    @IBOutlet weak var searchTextField: UITextField! {
+        didSet {
+            searchTextField.delegate = self
+            searchTextField.text = searchText
+        }
+        
+    }
+    
+    
     var nextRequestToAttempt: TwitterRequest? {
         if lastSuccessfulRequest == nil {
             if searchText != nil {
@@ -34,20 +55,14 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    @IBOutlet weak var searchTextField: UITextField! {
-        didSet {
-            searchTextField.delegate = self
-            searchTextField.text = searchText
-        }
-        
-    }
-    
+    //Set deafult search and update
     var searchText: String? = "#appleWatch" {
         didSet {
             lastSuccessfulRequest = nil
             searchTextField?.text = searchText
             tweets.removeAll()
             tableView.reloadData()
+            //Add search to recent searches
             if searchText != nil {
                 RecentSearches().add(searchText!)
             }
@@ -63,18 +78,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
             tableView.estimatedRowHeight = tableView.rowHeight
             tableView.rowHeight = UITableViewAutomaticDimension
         }
-        refresh()
+        refresh()//Load for the first time
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     func refresh() {
-       
-        
         if refreshControl != nil {
             refreshControl?.beginRefreshing()
         }
@@ -121,13 +129,6 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         return tweets[section].count
     }
     
-    //Struct to store constants
-    private struct Storyboard {
-        static let CellReuseIdentifier = "Tweet"
-        static let DetailsIdentifier = "showTweetDetail"
-        static let TweetImagesSegue = "showTweetImages"
-    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as TweetTableViewCell
         
@@ -135,6 +136,24 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         
         return cell
     }
+    
+
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    }
+    
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]?  {
+        
+        var favoriteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Save" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            
+              SavedTweets().add(self.tweets[indexPath.section][indexPath.row])
+              tableView.setEditing(false, animated: true)
+        })
+        favoriteAction.backgroundColor = UIColor().uicolorFromHex(0xFFD700)
+        return [favoriteAction]
+    }
+    
+        // MARK: - Segue Handling
     
     //Prevent segue when there are no details to show
     override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
@@ -157,26 +176,9 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
                         tdvc.tweet = tweetCell.tweet
                     }
                 }
-            } 
+            }
         }
     }
-    
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    }
-    
-    
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]?  {
-        
-        var favoriteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Save" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-            
-              SavedTweets().add(self.tweets[indexPath.section][indexPath.row])
-              tableView.setEditing(false, animated: true)
-        })
-        favoriteAction.backgroundColor = uicolorFromHex(0xFFD700)
-        return [favoriteAction]
-    }
-    
-    
     
     
     //Allows unwind to go back to the root. Prevents intermiediate viewcontrollers form intercepting the rewind
@@ -189,11 +191,5 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         return false
     }
     
-    func uicolorFromHex(rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
-    }
+  
 }

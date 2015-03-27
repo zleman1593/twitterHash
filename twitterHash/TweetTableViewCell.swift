@@ -15,9 +15,8 @@ class TweetTableViewCell: UITableViewCell
             updateUI()
         }
     }
-   
+    
     let urlColor = UIColor.blueColor()
-    let userMentionsColor = UIColor.greenColor()
     
     @IBOutlet weak var tweetProfileImageView: UIImageView!
     @IBOutlet weak var tweetScreenNameLabel: UILabel!
@@ -25,6 +24,7 @@ class TweetTableViewCell: UITableViewCell
     @IBOutlet weak var tweetCreatedLabel: UILabel!
     
     func updateUI() {
+        //Reset all outlets
         tweetTextLabel?.attributedText = nil
         tweetScreenNameLabel?.text = nil
         tweetProfileImageView?.image = nil
@@ -32,16 +32,17 @@ class TweetTableViewCell: UITableViewCell
         
         if let tweet = self.tweet {
             var text = tweet.text
-            
+            //Add a camera symbol to indicate the tweet has photos
             for _ in tweet.media {
                 text += " 📷"
             }
             
+            //Convert the tweet text into an NSMutableAttributedString so we can color the different components
             var attributedText = NSMutableAttributedString(string: text)
-            attributedText.changeKeywordsColor(tweet.hashtags, color:  uicolorFromHex(0xD3D3D3))
-            attributedText.changeKeywordsColor(tweet.urls, color: urlColor)
-            attributedText.changeKeywordsColor(tweet.userMentions, color: uicolorFromHex(0xCC9900))
             
+            attributedText.changeKeywordsColor(tweet.hashtags, color:  UIColor().uicolorFromHex(0x44466))
+            attributedText.changeKeywordsColor(tweet.urls, color: urlColor)
+            attributedText.changeKeywordsColor(tweet.userMentions, color: UIColor().uicolorFromHex(0xCC9900))
             attributedText.changeKeywordsColor(tweet.mediaMentions, color: urlColor)
             
             tweetTextLabel?.attributedText = attributedText
@@ -50,6 +51,7 @@ class TweetTableViewCell: UITableViewCell
             
             self.tweetProfileImageView?.image = nil
             if let profileImageURL = tweet.user.profileImageURL {
+                //Grab profile image of network on another thread
                 dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.value), 0)) {
                     let imageData = NSData(contentsOfURL: profileImageURL)
                     dispatch_async(dispatch_get_main_queue()) {
@@ -62,6 +64,8 @@ class TweetTableViewCell: UITableViewCell
                 }
             }
             
+            
+            //Add the date to the tweet.
             let formatter = NSDateFormatter()
             if NSDate().timeIntervalSinceDate(tweet.created) > 24*60*60 {
                 formatter.dateStyle = NSDateFormatterStyle.ShortStyle
@@ -70,25 +74,9 @@ class TweetTableViewCell: UITableViewCell
             }
             tweetCreatedLabel?.text = formatter.stringFromDate(tweet.created)
             
-            if (tweet.hashtags.count + tweet.urls.count + tweet.userMentions.count + tweet.media.count) > 0 {
-                accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            } else {
-                accessoryType = UITableViewCellAccessoryType.None
-                
-            }
         }
     }
     
-    func uicolorFromHex(rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
-    }
-
-    
-   
 }
 
 // MARK: - Extensions
@@ -100,6 +88,10 @@ private extension NSMutableAttributedString {
         }
     }
 }
+
+
+
+
 
 
 

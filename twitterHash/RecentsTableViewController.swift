@@ -17,6 +17,19 @@ class RecentsTableViewController: UITableViewController {
         RecentSearches().removeAll()
         tableView.reloadData()
     }
+    
+    
+    private struct Storyboard {
+        static let CellReuseIdentifier = "pastSearchCell"
+        static let SegueToSearch = "searchRecent"
+    }
+    
+        // MARK: - VC Life Cycle
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,10 +66,6 @@ class RecentsTableViewController: UITableViewController {
         }
     }
 
-    private struct Storyboard {
-        static let CellReuseIdentifier = "pastSearchCell"
-        static let SegueToSearch = "searchRecent"
-    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
@@ -66,6 +75,8 @@ class RecentsTableViewController: UITableViewController {
         return cell
     }
 
+    
+         // MARK: - Segue Handling
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
             if identifier == Storyboard.SegueToSearch {
@@ -77,8 +88,5 @@ class RecentsTableViewController: UITableViewController {
             }
         }
     }
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
+ 
 }

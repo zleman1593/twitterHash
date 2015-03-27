@@ -58,17 +58,6 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
     }
     
     
-    func zoom(gesture: UIPinchGestureRecognizer) {
-        if gesture.state == .Changed {
-            scale *= gesture.scale
-            gesture.scale = 1.0
-        }
-    }
-    
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
-        collectionView?.collectionViewLayout.invalidateLayout()
-    }
     
     // MARK: UICollectionViewDataSource
     
@@ -102,7 +91,24 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
         return CGSize(width: width, height: height)
     }
     
+ 
     
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
+        collectionView?.collectionViewLayout.invalidateLayout()
+    }
+
+    
+    // MARK:Gestures
+    
+    func zoom(gesture: UIPinchGestureRecognizer) {
+        if gesture.state == .Changed {
+            scale *= gesture.scale
+            gesture.scale = 1.0
+        }
+    }
+    
+    // MARK: - Segue Handling
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Segue to the tweet details assoiated with the selected image

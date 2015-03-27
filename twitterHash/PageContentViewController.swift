@@ -1,6 +1,6 @@
 //
 //  PageContentViewController.swift
-//  Lexii
+//  
 //
 //  Created by Zackery leman on 3/23/15.
 //  Copyright (c) 2015 Zleman. All rights reserved.
@@ -20,15 +20,10 @@ class PageContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.imageText.text = self.titleText
-        self.imageText.alpha = 0.1
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
-            self.imageText.alpha = 1.0
-        })
         
     }
     
-    
-    
+
     var cache: NSCache?
     
     var imageURL: NSURL? {

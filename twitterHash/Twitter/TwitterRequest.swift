@@ -1,8 +1,7 @@
 //
 //  TwitterRequest.swift
 //  Twitter
-//
-//  Created by CS193p Instructor.
+//  Open Sourced Twitter API Code
 //  Copyright (c) 2015 Stanford University. All rights reserved.
 //
 

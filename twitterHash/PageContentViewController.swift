@@ -1,24 +1,38 @@
 //
-//  TweetImageGridCell.swift
-//  twitterHash
+//  PageContentViewController.swift
+//  Lexii
 //
-//  Created by Zackery leman on 3/26/15.
+//  Created by Zackery leman on 3/23/15.
 //  Copyright (c) 2015 Zleman. All rights reserved.
 //
 
 import UIKit
 
-class TweetImageGridCell: UICollectionViewCell {
+class PageContentViewController: UIViewController {
 
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var imageText: UILabel!
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
+    var pageIndex: Int?
+    var titleText : String!
 
-    @IBOutlet weak var tweetImage: UIImageView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.imageText.text = self.titleText
+        self.imageText.alpha = 0.1
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.imageText.alpha = 1.0
+        })
+        
+    }
+    
+    
     
     var cache: NSCache?
     
     var imageURL: NSURL? {
         didSet {
-            backgroundColor = UIColor.darkGrayColor()
             image = nil
             fetchImage()
         }
@@ -26,16 +40,16 @@ class TweetImageGridCell: UICollectionViewCell {
     
     
     private var image: UIImage? {
-        get { return tweetImage.image }
+        get { return backgroundImage.image }
         set {
-            tweetImage.image = newValue
-            spinner?.stopAnimating()
+            backgroundImage?.image = newValue
+
         }
     }
     
     private func fetchImage() {
         if let url = imageURL {
-            spinner?.startAnimating()
+
             
             var imageData = cache?.objectForKey(url) as? NSData
             if imageData != nil {
@@ -59,7 +73,4 @@ class TweetImageGridCell: UICollectionViewCell {
             }
         }
     }
-    
-    
-    
 }

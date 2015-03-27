@@ -30,7 +30,7 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
     
     var images = [TweetMedia]()
     
-    struct TweetMedia: Printable {
+    struct TweetMedia {
         var tweet: Tweet
         var media: MediaItem
     }

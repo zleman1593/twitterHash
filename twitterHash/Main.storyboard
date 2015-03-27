@@ -345,14 +345,14 @@
                     </tabBar>
                     <connections>
                         <segue destination="PLg-GO-rWt" kind="relationship" relationship="viewControllers" id="ued-Lk-fnL"/>
+                        <segue destination="9xq-aK-r9r" kind="relationship" relationship="viewControllers" id="HZV-9E-IUC"/>
                         <segue destination="Vfi-1Z-WgC" kind="relationship" relationship="viewControllers" id="Pi6-6H-OU0"/>
                         <segue destination="cZH-m1-CMb" kind="relationship" relationship="viewControllers" id="fls-lZ-gt6"/>
-                        <segue destination="9xq-aK-r9r" kind="relationship" relationship="viewControllers" id="HZV-9E-IUC"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lu6-rb-y4E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="626" y="463"/>
+            <point key="canvasLocation" x="470" y="525"/>
         </scene>
         <!--Saved Tweets-->
         <scene sceneID="2TT-cv-acV">
@@ -543,7 +543,13 @@
                             <outlet property="delegate" destination="l6V-ut-G7D" id="Tic-c9-nXu"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Tweet Images" id="orI-gy-cZi"/>
+                    <navigationItem key="navigationItem" title="Tweet Images" id="orI-gy-cZi">
+                        <barButtonItem key="rightBarButtonItem" title="Slides" id="eDo-se-f8k">
+                            <connections>
+                                <segue destination="9uS-sc-NIA" kind="modal" modalTransitionStyle="crossDissolve" id="UgM-Lg-AbF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7F-ZS-UJu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -567,6 +573,78 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K9o-aF-cOE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2958" y="1968"/>
+        </scene>
+        <!--Page Content View Controller-->
+        <scene sceneID="Agz-lW-Une">
+            <objects>
+                <viewController storyboardIdentifier="PageContentViewController" id="BYQ-3K-1hw" customClass="PageContentViewController" customModule="twitterHash" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bl2-1g-Vmr"/>
+                        <viewControllerLayoutGuide type="bottom" id="hjS-0O-gAp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rzV-q1-9qn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bpX-TF-TDQ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bT-y6-VXa">
+                                <rect key="frame" x="173" y="129" width="254" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="254" id="kIt-C6-vGv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9bT-y6-VXa" firstAttribute="top" secondItem="Bl2-1g-Vmr" secondAttribute="bottom" constant="109" id="7EW-dk-fhv"/>
+                            <constraint firstItem="bpX-TF-TDQ" firstAttribute="bottom" secondItem="hjS-0O-gAp" secondAttribute="top" id="B2m-qz-A1Y"/>
+                            <constraint firstItem="bpX-TF-TDQ" firstAttribute="leading" secondItem="rzV-q1-9qn" secondAttribute="leading" id="ZlK-tc-X8U"/>
+                            <constraint firstItem="hjS-0O-gAp" firstAttribute="top" secondItem="9bT-y6-VXa" secondAttribute="bottom" constant="391" id="fre-UV-cAf"/>
+                            <constraint firstItem="bpX-TF-TDQ" firstAttribute="top" secondItem="rzV-q1-9qn" secondAttribute="top" id="iFO-S0-ma7"/>
+                            <constraint firstItem="9bT-y6-VXa" firstAttribute="centerX" secondItem="bpX-TF-TDQ" secondAttribute="centerX" id="lrP-f4-LJo"/>
+                            <constraint firstAttribute="trailing" secondItem="bpX-TF-TDQ" secondAttribute="trailing" id="rLQ-q2-ftL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundImage" destination="bpX-TF-TDQ" id="5dt-hF-Q4v"/>
+                        <outlet property="imageText" destination="9bT-y6-VXa" id="L6a-Zh-fjO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Aas-17-AZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5206" y="2959"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="tG1-8E-iXw">
+            <objects>
+                <viewController id="9uS-sc-NIA" customClass="ViewController" customModule="twitterHash" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9eg-PA-Clh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Gqb-yk-60M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2hO-cL-Med">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="wDL-86-tzS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Di-gT-CCe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3888" y="2664"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="QkG-3i-139">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="SWD-0K-RZG" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I4l-sa-sKZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4565" y="2959"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

@@ -15,8 +15,8 @@ class TweetTableViewCell: UITableViewCell
             updateUI()
         }
     }
-    var hashtagColor = UIColor.blueColor()
-    var urlColor = UIColor.redColor()
+    var hashtagColor = UIColor.uicolorFromHex(0xD3D3D3)
+    var urlColor = UIColor.blueColor()
     var userMentionsColor = UIColor.greenColor()
     
     @IBOutlet weak var tweetProfileImageView: UIImageView!
@@ -79,6 +79,15 @@ class TweetTableViewCell: UITableViewCell
         }
     }
     
+    func uicolorFromHex(rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
+    }
+
+    
    
 }
 
@@ -91,3 +100,6 @@ private extension NSMutableAttributedString {
         }
     }
 }
+
+
+

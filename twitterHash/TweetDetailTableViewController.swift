@@ -43,13 +43,27 @@ class TweetDetailTableViewController: UITableViewController {
         }
     }
     
+    override func viewDidLoad() {
+        let imageButton = UIBarButtonItem(barButtonSystemItem: .Organize, target: self, action: "saveTweet")
+        if let existingButton = navigationItem.rightBarButtonItem {
+            navigationItem.rightBarButtonItems = [existingButton, imageButton]
+        } else {
+            navigationItem.rightBarButtonItem = imageButton
+        }
+    }
+    
+    func saveTweet(){
+        SavedTweets().add(tweet)
+        navigationItem.rightBarButtonItem = nil
+
+    }
     
     //Once tweet is set upon segue add all tweet details into the array of sections
     var tweet: Tweet? {
         didSet{
             title = tweet?.user.screenName
-     
-                details.append(Details(title: "Tweet", data:  [DetailItem.Keyword(tweet!.text)]))
+            
+            details.append(Details(title: "Tweet", data:  [DetailItem.Keyword(tweet!.text)]))
             
             if let media = tweet?.media {
                 if media.count > 0{

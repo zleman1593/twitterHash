@@ -15,9 +15,9 @@ class TweetTableViewCell: UITableViewCell
             updateUI()
         }
     }
-    var hashtagColor = UIColor.uicolorFromHex(0xD3D3D3)
-    var urlColor = UIColor.blueColor()
-    var userMentionsColor = UIColor.greenColor()
+   
+    let urlColor = UIColor.blueColor()
+    let userMentionsColor = UIColor.greenColor()
     
     @IBOutlet weak var tweetProfileImageView: UIImageView!
     @IBOutlet weak var tweetScreenNameLabel: UILabel!
@@ -38,9 +38,9 @@ class TweetTableViewCell: UITableViewCell
             }
             
             var attributedText = NSMutableAttributedString(string: text)
-            attributedText.changeKeywordsColor(tweet.hashtags, color: hashtagColor)
+            attributedText.changeKeywordsColor(tweet.hashtags, color:  uicolorFromHex(0xD3D3D3))
             attributedText.changeKeywordsColor(tweet.urls, color: urlColor)
-            attributedText.changeKeywordsColor(tweet.userMentions, color: userMentionsColor)
+            attributedText.changeKeywordsColor(tweet.userMentions, color: uicolorFromHex(0xCC9900))
             
             attributedText.changeKeywordsColor(tweet.mediaMentions, color: urlColor)
             

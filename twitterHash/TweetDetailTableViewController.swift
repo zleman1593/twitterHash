@@ -52,6 +52,13 @@ class TweetDetailTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        animateTable()
+        
+        
+    }
+    
     func saveTweet(){
         SavedTweets().add(tweet)
         navigationItem.rightBarButtonItem = nil
@@ -134,6 +141,29 @@ class TweetDetailTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return details[section].title
+    }
+    
+    func animateTable() {
+        tableView.reloadData()
+        
+        let cells = tableView.visibleCells()
+        let tableHeight: CGFloat = tableView.bounds.size.height
+        
+        for i in cells {
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
+        }
+        
+        var index = 0
+        
+        for a in cells {
+            let cell: UITableViewCell = a as UITableViewCell
+            UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
+                cell.transform = CGAffineTransformMakeTranslation(0, 0);
+                }, completion: nil)
+            
+            index += 1
+        }
     }
     
     //Open the  a link in safari when clicked instead of treating it as a keywor to search

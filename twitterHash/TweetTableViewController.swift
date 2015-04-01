@@ -26,6 +26,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
             //Set the tweet data structure in the app delegate so that otherviews can
             let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
             appDelegate.tweets = tweets
+
         }
     }
     
@@ -81,6 +82,8 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         refresh()//Load for the first time
         
     }
+    
+
     
     func refresh() {
         if refreshControl != nil {
@@ -152,6 +155,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         favoriteAction.backgroundColor = UIColor().uicolorFromHex(0xFFD700)
         return [favoriteAction]
     }
+
     
         // MARK: - Segue Handling
     
@@ -190,6 +194,8 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
         return false
     }
+    
+    
     
   
 }

@@ -16,7 +16,9 @@ class RecentSearches {
         static let ValuesCountKey = "RecentSearches.ValuesCount"
         static let NumberOfSearches = 100
     }
+    
     private let defaults = NSUserDefaults.standardUserDefaults()
+    
     var values: [String] {
         get { return defaults.objectForKey(Const.ValuesKey) as? [String] ?? [] }
         set { defaults.setObject(newValue, forKey: Const.ValuesKey) }
@@ -66,6 +68,8 @@ class RecentSearches {
         valuesCount = []
     }
   
+    
+    
     
 }
 

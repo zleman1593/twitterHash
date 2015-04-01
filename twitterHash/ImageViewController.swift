@@ -24,6 +24,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
 //Create scrollView and set properties
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
+            
+            //Set initial values
             scrollView.contentSize  = imageView.frame.size
             scrollView.delegate = self
             scrollView.minimumZoomScale = 0.03
@@ -53,9 +55,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
         }
         if let sv = scrollView {
             if image != nil {
-                
-                //sv.zoomScale = max(sv.bounds.size.height / image!.size.height, sv.bounds.size.width / image!.size.width)
-                
                 sv.contentOffset = CGPoint(x: (imageView.frame.size.width - sv.frame.size.width) / 2, y: (imageView.frame.size.height - sv.frame.size.height) / 2)
                 
                 scrollViewDidScrollOrZoom = false

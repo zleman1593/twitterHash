@@ -19,6 +19,8 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
         static let CellArea: CGFloat = 4000
     }
     
+    //Collect all media items from all tweets. Store media ina struct with associated tweet.
+    //Collapse the arrays of  structs (mediaItems and tweets) together to get one array
     var tweets: [[Tweet]] = [] {
         didSet {
             images = tweets.reduce([], +)
@@ -27,7 +29,7 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
                 }.reduce([], +)
         }
     }
-    
+    //Array holding the media items with associated tweets
     var images = [TweetMedia]()
     
     struct TweetMedia {
@@ -35,8 +37,10 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
         var media: MediaItem
     }
     
+    //Cache for images will be handed to the collectionView
     var cache = NSCache()
     
+    //Initial scale of one. Cause layout to reset when scale changes
     var scale: CGFloat = 1 { didSet { collectionView?.collectionViewLayout.invalidateLayout() } }
     
     
@@ -45,6 +49,7 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "zoom:"))
+        //Grab tweet data from AppDelegate
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         tweets = appDelegate.tweets!
         
@@ -53,6 +58,7 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        //Grab tweet data from AppDelegate
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         tweets = appDelegate.tweets!
     }
@@ -99,7 +105,7 @@ class TweetImageCollectionViewController: UICollectionViewController, UICollecti
     }
 
     
-    // MARK:Gestures
+    // MARK: Gestures
     
     func zoom(gesture: UIPinchGestureRecognizer) {
         if gesture.state == .Changed {

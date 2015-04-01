@@ -30,12 +30,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     
     private func loadURL(){
-        
         if url != nil{
             webView.loadRequest(NSURLRequest(URL:url!))
         }
-        
-        
     }
     
     override func viewDidLoad() {

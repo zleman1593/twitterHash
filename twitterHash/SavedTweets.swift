@@ -21,16 +21,12 @@ class SavedTweets {
         set { defaults.setObject(newValue, forKey: Const.tweetsKey) }
     }
     
-
     
     
     func add(tweet: Tweet?) {
-        
         if let tweetToAdd = tweet? {
-        tweets.append("@\(tweet!.user.screenName): \(tweet!.text)")
+            tweets.append("@\(tweet!.user.screenName): \(tweet!.text)")
         }
-
-        
     }
     
     
@@ -38,7 +34,6 @@ class SavedTweets {
         var currentTweets = tweets
         currentTweets.removeAtIndex(index)
         tweets = currentTweets
-
     }
     
     
